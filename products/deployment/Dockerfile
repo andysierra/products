@@ -1,7 +1,12 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine AS builder
+WORKDIR /app
+COPY .. .
+RUN chmod +x gradlew && ./gradlew bootJar -x test
+
+FROM eclipse-temurin:21-jre-alpine
 VOLUME /tmp
-COPY *.jar products.jar
-ENV JAVA_OPTS=" -Xshareclasses:name=cacheapp,cacheDir=/cache,nonfatal -XX:+UseContainerSupport -XX:MaxRAMPercentage=70 -Djava.security.egd=file:/dev/./urandom"
-# Replace with a non-root user to avoid running the container with excessive privileges
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+COPY --from=builder /app/applications/app-service/build/libs/products.jar products.jar
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=70 -Djava.security.egd=file:/dev/./urandom"
 USER appuser
-ENTRYPOINT [ "/bin/sh", "-c", "/opt/java/openjdk/bin/java $JAVA_OPTS  -jar /products.jar" ]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /products.jar"]

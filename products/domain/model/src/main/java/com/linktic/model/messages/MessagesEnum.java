@@ -18,6 +18,9 @@ public enum MessagesEnum {
     DUPLICATE_SKU(409, "Ya existe un producto con ese SKU", "42"),
     VALIDATION_ERROR(422, "Error de validacion", "43"),
 
+    UNAUTHORIZED(401, "API Key invalida o no proporcionada", "44"),
+    RATE_LIMITED(429, "Demasiadas solicitudes, intente mas tarde", "45"),
+
     UNKNOWN_ERROR(500, "Error desconocido, estaremos reparandolo muy pronto", "50");
 
     private final int code;

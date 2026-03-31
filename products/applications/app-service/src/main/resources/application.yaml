@@ -30,6 +30,11 @@ management:
           include: readinessState,db
 cors:
   allowed-origins: "*"
+security:
+  api-key: ${API_KEY:products-secret-key-2026}
+  rate-limit:
+    max-requests: ${RATE_LIMIT_MAX:50}
+    window-ms: ${RATE_LIMIT_WINDOW:60000}
 adapters:
   r2dbc:
     host: ${DB_HOST:localhost}
