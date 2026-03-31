@@ -1,6 +1,6 @@
 # Products Service
 
-API Restful reactiva para gestion de productos, desarrollada con Spring Boot WebFlux y Clean Architecture (Bancolombia Scaffold).
+API Restful reactiva para gestion de productos, desarrollada con Spring Boot WebFlux y Clean Architecture.
 
 ## Stack Tecnologico
 
