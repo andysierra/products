@@ -17,7 +17,9 @@ include ':app-service'
 include ':model'
 include ':usecase'
 include ':reactive-web'
+include ':r2dbc-postgresql'
 project(':app-service').projectDir = file('./applications/app-service')
 project(':model').projectDir = file('./domain/model')
 project(':usecase').projectDir = file('./domain/usecase')
 project(':reactive-web').projectDir = file('./infrastructure/entry-points/reactive-web')
+project(':r2dbc-postgresql').projectDir = file('./infrastructure/driven-adapters/r2dbc-postgresql')
