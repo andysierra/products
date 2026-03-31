@@ -1,0 +1,49 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: inventory
+  devtools:
+    add-properties: false
+  flyway:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:store_db}
+    user: ${DB_USER:admin}
+    password: ${DB_PASSWORD:admin}
+    schemas: ${DB_SCHEMA:public}
+    baseline-on-migrate: true
+  profiles:
+    include: null
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus,info"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+cors:
+  allowed-origins: "*"
+security:
+  api-key: ${API_KEY:inventory-secret-key-2026}
+  rate-limit:
+    max-requests: ${RATE_LIMIT_MAX:50}
+    window-ms: ${RATE_LIMIT_WINDOW:60000}
+adapters:
+  r2dbc:
+    host: ${DB_HOST:localhost}
+    port: ${DB_PORT:5432}
+    database: ${DB_NAME:store_db}
+    schema: ${DB_SCHEMA:public}
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:admin}
+  rest-consumer:
+    products-url: ${PRODUCTS_SERVICE_URL:http://localhost:8080}
+    api-key: ${PRODUCTS_API_KEY:products-secret-key-2026}
+    timeout: ${PRODUCTS_TIMEOUT:2000}
